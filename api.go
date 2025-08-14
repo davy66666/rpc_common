@@ -3,10 +3,10 @@ package main
 import (
 	"flag"
 
-	"ks_api_service/internal/config"
-	"ks_api_service/internal/server"
-	"ks_api_service/internal/svc"
-	"ks_api_service/pb/api"
+	"github.com/davy66666/rpc_service/internal/config"
+	"github.com/davy66666/rpc_service/internal/server"
+	"github.com/davy66666/rpc_service/internal/svc"
+	"github.com/davy66666/rpc_service/pb/api"
 
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/service"

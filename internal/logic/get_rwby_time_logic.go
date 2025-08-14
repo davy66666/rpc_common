@@ -4,9 +4,9 @@ import (
 	"context"
 	g "github.com/doug-martin/goqu/v9"
 	"github.com/pkg/errors"
-	"ks_api_service/internal/model"
-	"ks_api_service/internal/svc"
-	"ks_api_service/pb/api"
+	"github.com/davy66666/rpc_service/internal/model"
+	"github.com/davy66666/rpc_service/internal/svc"
+	"github.com/davy66666/rpc_service/pb/api"
 
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/logx"

@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"ks_api_service/internal/logic"
-	"ks_api_service/internal/svc"
-	"ks_api_service/pb/api"
+	"github.com/davy66666/rpc_service/internal/logic"
+	"github.com/davy66666/rpc_service/internal/svc"
+	"github.com/davy66666/rpc_service/pb/api"
 )
 
 type ApiServer struct {

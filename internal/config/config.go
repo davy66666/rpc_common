@@ -1,9 +1,9 @@
 package config
 
 import (
-	"ks_api_service/common/utils/dbx"
-	"ks_api_service/common/utils/elasticx"
-	"ks_api_service/common/utils/rabbitmqc"
+	"github.com/davy66666/rpc_service/common/utils/dbx"
+	"github.com/davy66666/rpc_service/common/utils/elasticx"
+	"github.com/davy66666/rpc_service/common/utils/rabbitmqc"
 	"strings"
 
 	"github.com/zeromicro/go-zero/core/conf"

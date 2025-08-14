@@ -1,4 +1,4 @@
-module ks_api_service
+module github.com/davy66666/rpc_service
 
 go 1.24.4
 
@@ -11,13 +11,14 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/pkg/errors v0.9.1
-	github.com/redis/go-redis/v9 v9.11.0
+	github.com/prometheus/client_golang v1.23.0
+	github.com/redis/go-redis/v9 v9.12.1
 	github.com/streadway/amqp v1.1.0
 	github.com/zeromicro/go-zero v1.8.5
 	github.com/zeromicro/x v0.0.0-20240408115609-8224c482b07e
-	golang.org/x/text v0.25.0
+	golang.org/x/text v0.28.0
 	google.golang.org/grpc v1.74.2
-	google.golang.org/protobuf v1.36.6
+	google.golang.org/protobuf v1.36.7
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.30.1
 	gorm.io/plugin/dbresolver v1.6.2
@@ -56,7 +57,7 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.17.11 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
@@ -66,10 +67,9 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/openzipkin/zipkin-go v0.4.3 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
-	github.com/prometheus/client_golang v1.21.1 // indirect
-	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.62.0 // indirect
-	github.com/prometheus/procfs v0.15.1 // indirect
+	github.com/prometheus/client_model v0.6.2 // indirect
+	github.com/prometheus/common v0.65.0 // indirect
+	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/robertkrimen/otto v0.5.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect

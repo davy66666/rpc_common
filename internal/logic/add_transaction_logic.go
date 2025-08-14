@@ -10,11 +10,11 @@ import (
 	"strings"
 	"time"
 
-	values "ks_api_service/common/value"
-	"ks_api_service/internal/model"
-	"ks_api_service/internal/svc"
-	"ks_api_service/internal/types"
-	"ks_api_service/pb/api"
+	values "github.com/davy66666/rpc_service/common/value"
+	"github.com/davy66666/rpc_service/internal/model"
+	"github.com/davy66666/rpc_service/internal/svc"
+	"github.com/davy66666/rpc_service/internal/types"
+	"github.com/davy66666/rpc_service/pb/api"
 
 	json "github.com/bytedance/sonic"
 	g "github.com/doug-martin/goqu/v9"

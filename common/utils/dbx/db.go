@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"ks_api_service/common/utils/loggerx"
+	"github.com/davy66666/rpc_service/common/utils/loggerx"
 
 	sqlxx "github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"

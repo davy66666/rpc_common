@@ -5,10 +5,10 @@ import (
 	"github.com/streadway/amqp"
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"ks_api_service/common/utils/dbx"
-	"ks_api_service/common/utils/rabbitmqc"
-	"ks_api_service/internal/config"
-	"ks_api_service/internal/model"
+	"github.com/davy66666/rpc_service/common/utils/dbx"
+	"github.com/davy66666/rpc_service/common/utils/rabbitmqc"
+	"github.com/davy66666/rpc_service/internal/config"
+	"github.com/davy66666/rpc_service/internal/model"
 )
 
 type ServiceContext struct {

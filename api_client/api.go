@@ -6,7 +6,7 @@ package api_client
 import (
 	"context"
 
-	"ks_api_service/pb/api"
+	"github.com/davy66666/rpc_service/pb/api"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

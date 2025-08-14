@@ -6,7 +6,7 @@ import (
 	json "github.com/bytedance/sonic"
 	g "github.com/doug-martin/goqu/v9"
 	"github.com/olivere/elastic/v7"
-	"ks_api_service/internal/types"
+	"github.com/davy66666/rpc_service/internal/types"
 	"strconv"
 )
 

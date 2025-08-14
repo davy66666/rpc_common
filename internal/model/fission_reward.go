@@ -3,7 +3,7 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"ks_api_service/internal/types"
+	"github.com/davy66666/rpc_service/internal/types"
 
 	g "github.com/doug-martin/goqu/v9"
 )
