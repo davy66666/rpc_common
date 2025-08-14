@@ -1,0 +1,90 @@
+Name: api.rpc
+ListenOn: 0.0.0.0:10001
+Timeout: 100000
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: api.rpc
+
+
+RedisConf:
+  Host: 127.0.0.1
+  Port: 6379
+  Password:
+  ClientName:
+  PoolSize: 4
+  MinIdleConns: 1
+  MaxIdleConns: 10
+  Type: node
+
+ElasticConf:
+  Addr: http://154.205.136.245:9200
+  Username: elastic
+  Password: KZSgEXaRnu5647XjCJBEMxAkvrQ54C
+  Sniff: false
+
+RabbitMqConf:
+  Host: 154.205.136.245
+  Port: 5672
+  Username: admin
+  Password: l0Kic4IXLmwSUVWR
+  Consumer: rabbitmq
+  Tag:
+  MaxRetries: 3
+  RetryInterval: 1
+
+Mysql:
+#  MasterDB:
+#    Host: 34.96.209.243
+#    Port: 20001
+#    Username: dev
+#    Password: zZblBgi6XMjIfH8h
+#    Database: ks_dbm2
+#    MaxIdleConns: 1
+#    MaxOpenConns: 50
+
+
+  MasterDB:
+    Host: 20.189.74.163
+    Port: 23001
+    Username: joey
+    Password: 6NkzMqtJFsYE4L3x
+    Database: ks_dbm2
+    MaxIdleConns: 1
+    MaxOpenConns: 50
+
+  SlaveDB:
+    Host: 34.96.209.243
+    Port: 20001
+    Username: dev
+    Password: zZblBgi6XMjIfH8h
+    Database: ks_dbm2
+    MaxIdleConns: 1
+    MaxOpenConns: 50
+
+  Dbm1DB:
+    Host: 34.96.209.243
+    Port: 10005
+    Username: postgres
+    Password: 4esg2O5qmIGY*Zyf8duEJrSTK3jzoZKB
+    Database: ks_dbm1
+    MaxIdleConns: 1
+    MaxOpenConns: 50
+
+  LogDB:
+    Host: 20.189.74.163
+    Port: 23001
+    Username: joey
+    Password: 6NkzMqtJFsYE4L3x
+    Database: ks_logs
+    MaxIdleConns: 1
+    MaxOpenConns: 50
+
+  ActivityDB:
+    Host: 20.189.74.163
+    Port: 23001
+    Username: joey
+    Password: 6NkzMqtJFsYE4L3x
+    Database: ks_activity
+    MaxIdleConns: 1
+    MaxOpenConns: 50

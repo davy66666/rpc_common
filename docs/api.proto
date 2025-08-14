@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+package api;
+option go_package = "./api";
+
+message Account {
+  int64 UserId = 1;
+  double Amount = 2;
+  double Deposit = 3;
+  double Withdraw = 4;
+  double Tuijian = 5;
+  double LockMoney = 6;
+  int64 DepositTimes = 7;
+  int64 WithdrawTimes = 8;
+  int64 Id = 9;
+}
+message ExtraData {
+  string Description = 1;
+  string PayType = 2;
+  int64 BankType = 3;
+  string IP = 4;
+  string ThirdMerchantName = 5;
+  string MerchantNum = 6;
+  string ThirdTrackNum = 7;
+  string Issue = 8;
+  int64 AdminID = 9;
+  string AdminName = 10;
+  string BillID = 11;
+  string GameCode = 12;
+  string Remark = 13;
+  string ForefatherIDs = 14;
+  int64 IsTester = 15;
+  int64 IsSyncGiftMoneyTransaction = 16;
+  double BetAmount = 17;
+  string Username = 18;
+  int64 TransactionID = 19;
+  int64 UserId = 20;
+  double BetAmountRate = 21;
+}
+
+message AddTransactionReq{
+  Account Account = 1  ;
+  int64 TypeId = 2;
+  double Amount = 3;
+  ExtraData ExtraData = 4;
+}
+
+message AddTransactionResp{
+  repeated Transaction list = 1;
+  int64 Status = 2;
+}
+
+
+message GetRwbyTimeReq{
+  int64 UserID = 1;
+  int64 StartAt = 2;
+  int64 EndAt = 3;
+}
+
+message Transaction {
+  int64 ID = 1; // @gotags: json:"id"
+  int64 UserID = 2;
+  int64 TransFatherID = 3;
+  int64 TransTypesID = 4;
+  string Description = 5;
+  double Amount = 6;
+  int64 BankType = 7;
+  string PayType = 8;
+  string Issue = 9;
+  int64 CreatedAt = 10;
+}
+
+message GetRwbyTimeResp{
+  repeated Transaction list = 1;
+}
+
+message GetLastWithdrawalReq{
+  int64 UserID = 1;
+}
+
+message GetLastWithdrawalResp{
+  Transaction list = 1;
+}
+
+message GetTransferReq{
+  int64 UserID = 1;
+  int64 StartAt = 2;
+  int64 EndAt = 3;
+}
+
+message GetTransferResp{
+  repeated Transaction list = 1;
+}
+
+message GetTransListByTransFatherIdReq{
+  int64 UserID = 1;
+  int64 StartAt = 2;
+  int64 EndAt = 3;
+}
+
+message GetTransListByTransFatherIdResp{
+  repeated Transaction list = 1;
+}
+
+message TransUserCountByUserIdsReq{
+  repeated int64 UserID = 1;
+  int64 TransFatherID = 2;
+  string StartAt = 3;
+  string EndAt = 4;
+}
+
+message TransUserCountByUserIdsResp{
+  int64 UserCount = 1;
+  double SumAmount = 2;
+  repeated int64 UserIds = 3;
+}
+
+service api {
+  // 增加新的账变
+  rpc AddTransaction(AddTransactionReq) returns (AddTransactionResp);
+  // GetRWByTime
+  rpc GetRwbyTime(GetRwbyTimeReq) returns (GetRwbyTimeResp);
+  // GetLastWithdrawal
+  rpc GetLastWithdrawal(GetLastWithdrawalReq) returns (GetLastWithdrawalResp);
+  // GetTransfer
+  rpc GetTransfer(GetTransferReq) returns (GetTransferResp);
+  // GetTransListByTransFatherId
+  rpc GetTransListByTransFatherId(GetTransListByTransFatherIdReq) returns (GetTransListByTransFatherIdResp);
+  // GetTransListByTransFatherId
+  rpc TransUserCountByUserIds(TransUserCountByUserIdsReq) returns (TransUserCountByUserIdsResp);
+}

@@ -1,0 +1,632 @@
+{
+  "1000": {
+    "zh": "服务繁忙,请稍后重试",
+    "pt": "Serviço ocupado, tente mais tarde",
+    "en": "The service is busy, please try again later"
+  },
+  "1001": {
+    "zh": "参数错误",
+    "pt": "Erro de parâmetro",
+    "en": "Parameter error"
+  },
+  "1002": {
+    "zh": "验证码错误",
+    "pt": "Erro de código de verificação",
+    "en": "Verification code error"
+  },
+  "1003": {
+    "zh": "账号错误",
+    "pt": "Erro de conta",
+    "en": "Account error"
+  },
+  "1004": {
+    "zh": "密码错误",
+    "pt": "Senha incorreta",
+    "en": "Wrong password"
+  },
+  "1005": {
+    "zh": "权限不足",
+    "pt": "Permissões insuficientes",
+    "en": "Insufficient permissions"
+  },
+  "1006": {
+    "zh": "该权限菜单存在子级权限菜单",
+    "pt": "Este menu de permissão tem um menu de permissão de subnível",
+    "en": "This permission menu has a sub-level permission menu"
+  },
+  "1007": {
+    "zh": "父级菜单不能为自己",
+    "pt": "O menu para pais não pode ser seu próprio",
+    "en": "The parent menu cannot be its own"
+  },
+  "1008": {
+    "zh": "角色已存在",
+    "pt": "Função já existe",
+    "en": "Role already exists"
+  },
+  "1009": {
+    "zh": "该角色存在子角色",
+    "pt": "Esta função tem subfunções",
+    "en": "This role has sub-roles"
+  },
+  "1010": {
+    "zh": "部门已存在",
+    "pt": "Departamento já existe",
+    "en": "Department already exists"
+  },
+  "1011": {
+    "zh": "该部门存在子部门",
+    "pt": "Este departamento tem subdepartamentos",
+    "en": "This department has sub-departments"
+  },
+  "1012": {
+    "zh": "岗位已存在",
+    "pt": "Posição já existe",
+    "en": "Position already exists"
+  },
+  "1013": {
+    "zh": "该岗位正在使用中",
+    "pt": "Esta posição está atualmente em uso",
+    "en": "This position is currently in use"
+  },
+  "1014": {
+    "zh": "职称已存在",
+    "pt": "Título já existe",
+    "en": "Title already exists"
+  },
+  "1015": {
+    "zh": "该职称正在使用中",
+    "pt": "Este título está em uso",
+    "en": "This title is in use"
+  },
+  "1016": {
+    "zh": "账号已存在",
+    "pt": "Conta já existe",
+    "en": "Account already exists"
+  },
+  "1017": {
+    "zh": "该部门正在使用中",
+    "pt": "Este departamento está em uso",
+    "en": "This department is in use"
+  },
+  "1018": {
+    "zh": "该角色正在使用中",
+    "pt": "Esta função está em uso",
+    "en": "This role is in use"
+  },
+  "1019": {
+    "zh": "父级角色不能为自己",
+    "pt": "A função para pais não pode ser",
+    "en": "The parent role cannot be"
+  },
+  "1020": {
+    "zh": "父级部门不能为自己",
+    "pt": "O departamento para pais não pode ser seu próprio",
+    "en": "The parent department cannot be its own"
+  },
+  "1021": {
+    "zh": "账号已禁用",
+    "pt": "Conta desativada",
+    "en": "Account disabled"
+  },
+  "1022": {
+    "zh": "不能设置子级为自己的父级",
+    "pt": "Não é possível definir um filho como seu próprio pai",
+    "en": "Cannot set a child as its own parent"
+  },
+  "1023": {
+    "zh": "权限类型不能作为父级菜单",
+    "pt": "O tipo de permissão não pode ser usado como menu para pais",
+    "en": "The permission type cannot be used as a parent menu"
+  },
+  "1024": {
+    "zh": "配置已存在",
+    "pt": "Configuração já existe",
+    "en": "Configuration already exists"
+  },
+  "1025": {
+    "zh": "字典已存在",
+    "pt": "Dicionário já existe",
+    "en": "Dictionary already exists"
+  },
+  "1026": {
+    "zh": "授权已失效，请重新登录",
+    "pt": "A autorização expirou, logue novamente",
+    "en": "Authorization has expired, please log in again"
+  },
+  "1027": {
+    "zh": "该字典集存在配置项",
+    "pt": "O conjunto de dicionários tem itens de configuração",
+    "en": "The dictionary set has configuration items"
+  },
+  "1028": {
+    "zh": "该岗位正在使用中",
+    "pt": "Esta posição está atualmente em uso",
+    "en": "This position is currently in use"
+  },
+  "1029": {
+    "zh": "该职称正在使用中",
+    "pt": "Este título está em uso",
+    "en": "This title is in use"
+  },
+  "1030": {
+    "zh": "禁止操作",
+    "pt": "Operação proibida",
+    "en": "Forbidden operation"
+  },
+  "1031": {
+    "zh": "角色标识已存在",
+    "pt": "ID de função já existe",
+    "en": "Role ID already exists"
+  },
+  "1032": {
+    "zh": "部门标识已存在",
+    "pt": "ID de departamento já existe",
+    "en": "Department ID already exists"
+  },
+  "1033": {
+    "zh": "角色不在可控范围",
+    "pt": "O caractere está fora de controle",
+    "en": "The character is out of control"
+  },
+  "1034": {
+    "zh": "职务ID错误",
+    "pt": "ID de trabalho incorreto",
+    "en": "Wrong job ID"
+  },
+  "1035": {
+    "zh": "部门不存在",
+    "pt": "Departamento não existe",
+    "en": "Department does not exist"
+  },
+  "1036": {
+    "zh": "岗位不存在",
+    "pt": "A posição não existe",
+    "en": "The position does not exist"
+  },
+  "1037": {
+    "zh": "父级角色不存在",
+    "pt": "A função pai não existe",
+    "en": "The parent role does not exist"
+  },
+  "1038": {
+    "zh": "父级部门不存在",
+    "pt": "O departamento pai não existe",
+    "en": "The parent department does not exist"
+  },
+  "1039": {
+    "zh": "父级菜单不存在",
+    "pt": "O menu para pais não existe",
+    "en": "The parent menu does not exist"
+  },
+  "1040": {
+    "zh": "字典集不存在",
+    "pt": "Conjunto de dicionários não existe",
+    "en": "Dictionary set does not exist"
+  },
+  "1041": {
+    "zh": "字典不存在",
+    "pt": "Dicionário não existe",
+    "en": "Dictionary does not exist"
+  },
+  "1042": {
+    "zh": "权限菜单不存在",
+    "pt": "Menu de permissões não existe",
+    "en": "Permissions menu does not exist"
+  },
+  "1043": {
+    "zh": "角色不存在",
+    "pt": "Função não existe",
+    "en": "role does not exist"
+  },
+  "1044": {
+    "zh": "用户不存在",
+    "pt": "Usuário não existe",
+    "en": "User does not exist"
+  },
+  "1045": {
+    "zh": "密码规则不正确",
+    "pt": "Regras de senha estão incorretas",
+    "en": "Password rules are incorrect"
+  },
+  "1046": {
+    "zh": "账号状态异常",
+    "pt": "Status da conta anormal",
+    "en": "Abnormal account status"
+  },
+  "1047": {
+    "zh": "旧密码错误",
+    "pt": "Senha antiga incorreta",
+    "en": "Wrong old password"
+  },
+  "1048": {
+    "zh": "文件大小限制",
+    "pt": "Limite de tamanho do arquivo",
+    "en": "File size limit"
+  },
+  "1049": {
+    "zh": "钱包加锁失败",
+    "pt": "Falha no bloqueio da carteira",
+    "en": "Wallet lock failed"
+  },
+  "1050": {
+    "zh": "余额不足",
+    "pt": "Saldo insuficiente",
+    "en": "Insufficient balance"
+  },
+  "1051": {
+    "zh": "账号禁用",
+    "pt": "Conta desativada",
+    "en": "Account disabled"
+  },
+  "1052": {
+    "zh": "账号或者密码错误",
+    "pt": "Conta ou senha incorreta",
+    "en": "Wrong account or password"
+  },
+  "1053": {
+    "zh": "邀请码错误",
+    "pt": "Erro de código de convite",
+    "en": "Invitation code error"
+  },
+  "1054": {
+    "zh": "账号已存在",
+    "pt": "Conta já existe",
+    "en": "Account already exists"
+  },
+  "1055": {
+    "zh": "旧密码错误",
+    "pt": "Senha antiga incorreta",
+    "en": "Wrong old password"
+  },
+  "1056": {
+    "zh": "无法领取红包",
+    "pt": "Não foi possível receber o bônus",
+    "en": "Unable to receive red envelope"
+  },
+  "1057": {
+    "zh": "交易最小值错误",
+    "pt": "Erro de valor mínimo de transação",
+    "en": "Transaction minimum value error"
+  },
+  "1058": {
+    "zh": "订单无法取消",
+    "pt": "Pedido não pode ser cancelado",
+    "en": "Order cannot be canceled"
+  },
+  "1059": {
+    "zh": "IP限制",
+    "pt": "Restrições de IP",
+    "en": "IP restrictions"
+  },
+  "1060": {
+    "zh": "存在未完成的订单,无法修改",
+    "pt": "Há um pedido inacabado e não pode ser modificado",
+    "en": "There is an unfinished order and cannot be modified"
+  },
+  "1061": {
+    "zh": "存在未完成的订单,无法删除",
+    "pt": "Há pedidos inacabados e não podem ser excluídos",
+    "en": "There are unfinished orders and cannot be deleted."
+  },
+  "1062": {
+    "zh": "抽奖次数已用完",
+    "pt": "O número de sorteios foram esgotados",
+    "en": "The draw times have been used up"
+  },
+  "1063": {
+    "zh": "交易密码错误",
+    "pt": "Senha de transação incorreta",
+    "en": "Wrong transaction password"
+  },
+  "1064": {
+    "zh": "手机号码已存在",
+    "pt": "Nº de celular já existe",
+    "en": "Mobile number already exists"
+  },
+  "1065": {
+    "zh": "邮箱已存在",
+    "pt": "Email já existe",
+    "en": "Email already exists"
+  },
+  "1066": {
+    "zh": "游戏维护中",
+    "pt": "O jogo está em manutenção",
+    "en": "The game is under maintenance"
+  },
+  "1067": {
+    "zh": "游戏已被总控禁用",
+    "pt": "O jogo foi desativado pelo controlador principal",
+    "en": "The game has been disabled by the master controller"
+  },
+  "1068": {
+    "zh": "游戏场馆已被总控禁用",
+    "pt": "O local do jogo foi desativado pelo controle principal",
+    "en": "The game venue has been disabled by the master control"
+  },
+  "1069": {
+    "zh": "条件不满足",
+    "pt": "Condição não atendida",
+    "en": "Condition not met"
+  },
+  "1070": {
+    "zh": "版本号错误",
+    "pt": "Nº de versão incorreto",
+    "en": "Wrong version number"
+  },
+  "1071": {
+    "zh": "用户名验证错误",
+    "pt": "Erro de verificação de nome de usuário",
+    "en": "Username verification error"
+  },
+  "1072": {
+    "zh": "奖品中奖率超限",
+    "pt": "Taxa de ganho de prêmios excede o limite",
+    "en": "Prize winning rate exceeds the limit"
+  },
+  "1073": {
+    "zh": "登录授权验证码不能为空",
+    "pt": "O código de verificação de autorização de login não pode estar vazio",
+    "en": "The login authorization verification code cannot be empty"
+  },
+  "1074": {
+    "zh": "登录授权验证码错误",
+    "pt": "Erro no código de verificação de autorização de login",
+    "en": "Login authorization verification code error"
+  },
+  "1075": {
+    "zh": "玩家未进行首冲",
+    "pt": "O jogador não fez o primeiro depósito",
+    "en": "The player has not made the first deposit"
+  },
+  "1076": {
+    "zh": "划转金额错误",
+    "pt": "Valor transferido incorreto",
+    "en": "Wrong amount transferred"
+  },
+  "1077": {
+    "zh": "活动相同IP参与次数限制",
+    "pt": "Limite no Nº de vezes que o mesmo IP pode participar de um evento",
+    "en": "Limit on the number of times the same IP can participate in an event"
+  },
+  "1078": {
+    "zh": "活动相同设备参与次数限制",
+    "pt": "Limite no Nº de vezes que o mesmo dispositivo pode participar de uma atividade",
+    "en": "Limit on the number of times the same device can participate in an activity"
+  },
+  "1079": {
+    "zh": "活动未开启",
+    "pt": "O evento não foi iniciado",
+    "en": "The event is not started"
+  },
+  "1080": {
+    "zh": "文件为空",
+    "pt": "Arquivo vazio",
+    "en": "File is empty"
+  },
+  "1081": {
+    "zh": "活动已结束",
+    "pt": "Evento encerrado",
+    "en": "Event has ended"
+  },
+  "1082": {
+    "zh": "活动配置错误",
+    "pt": "Erro de configuração de atividade",
+    "en": "Activity configuration error"
+  },
+  "1083": {
+    "zh": "领取金额错误",
+    "pt": "Valor recebido incorreto",
+    "en": "Received wrong amount"
+  },
+  "1084": {
+    "zh": "数据源错误",
+    "pt": "Erro na fonte de dados",
+    "en": "Data source error"
+  },
+  "1085": {
+    "zh": "支付通道维护",
+    "pt": "Canal de pagamento em manutenção",
+    "en": "Payment channel maintenance"
+  },
+  "1086": {
+    "zh": "流水任务未完成",
+    "pt": "A tarefa do pipeline não está concluída",
+    "en": "The pipeline task is not completed"
+  },
+  "1087": {
+    "zh": "验证签名错误",
+    "pt": "Erro de verificação de assinatura",
+    "en": "Verify signature error"
+  },
+  "1088": {
+    "zh": "奖品已过期",
+    "pt": "Prêmio expirou",
+    "en": "Prize has expired"
+  },
+  "1089": {
+    "zh": "订单已被锁定",
+    "pt": "Pedido foi bloqueado",
+    "en": "Order has been locked"
+  },
+  "1090": {
+    "zh": "订单状态已改变",
+    "pt": "Status do pedido foi alterado",
+    "en": "Order status has changed"
+  },
+  "1091": {
+    "zh": "推广域名未配置",
+    "pt": "Domínio de promoção não configurado",
+    "en": "Promotion domain name is not configured"
+  },
+  "1092": {
+    "zh": "推广域名未更新",
+    "pt": "O domínio de promoção não foi atualizado",
+    "en": "The promotion domain name has not been updated"
+  },
+  "1093": {
+    "zh": "推广域名已存在",
+    "pt": "O domínio a ser promovido já existe",
+    "en": "The domain name to be promoted already exists"
+  },
+  "1094": {
+    "zh": "推广Code未设置",
+    "pt": "Código de promoção não definido",
+    "en": "Promotion Code not set"
+  },
+  "1095": {
+    "zh": "相同域名无法重设",
+    "pt": "O mesmo domínio não pode ser redefinido",
+    "en": "The same domain name cannot be reset"
+  },
+  "1096": {
+    "zh": "该厂商还存在游戏",
+    "pt": "Este fabricante também tem jogos",
+    "en": "This manufacturer also has games"
+  },
+  "1097": {
+    "zh": "通道名称已存在",
+    "pt": "Nome do canal já existe",
+    "en": "Channel name already exists"
+  },
+  "1098": {
+    "zh": "通道Code已存在",
+    "pt": "Código do canal já existe",
+    "en": "Channel Code already exists"
+  },
+  "1099": {
+    "zh": "上游通道已关闭",
+    "pt": "O canal upstream está fechado",
+    "en": "The upstream channel is closed"
+  },
+  "1100": {
+    "zh": "无站点需要下发",
+    "pt": "Nenhum site precisa ser emitido",
+    "en": "No site needs to be issued"
+  },
+  "1101": {
+    "zh": "有正在使用的站点数据",
+    "pt": "Há dados de site em uso",
+    "en": "There is site data in use"
+  },
+  "1102": {
+    "zh": "暂不支持下发多条数据",
+    "pt": "O envio de múltiplos dados ainda não é suportado",
+    "en": "Sending multiple data is not supported yet"
+  },
+  "1103": {
+    "zh": "支付通道维护",
+    "pt": "Canal de pagamento em manutenção",
+    "en": "Payment channel maintenance"
+  },
+  "1104": {
+    "zh": "团队存在代理",
+    "pt": "Presença de equipe agente",
+    "en": "Team presence agent"
+  },
+  "1105": {
+    "zh": "支付配置错误",
+    "pt": "Erro de configuração de pagamento",
+    "en": "Payment configuration error"
+  },
+  "1106": {
+    "zh": "IP受限，请联系客服",
+    "pt": "IP está restrito, contate o SAC",
+    "en": "IP is restricted, please contact customer service"
+  },
+  "1107": {
+    "zh": "添加数量已达上限",
+    "pt": "Nº máximo de adições atingido",
+    "en": "The maximum number of additions has been reached"
+  },
+  "1108": {
+    "zh": "机器人频道ID未设置",
+    "pt": "ID do canal do robô não definido",
+    "en": "Robot channel ID not set"
+  },
+  "1109": {
+    "zh": "当前状态不能修改",
+    "pt": "O status atual não pode ser modificado",
+    "en": "The current status cannot be modified"
+  },
+  "1110": {
+    "zh": "超出最大推荐游戏限制",
+    "pt": "Excedeu o limite máximo de jogos recomendados",
+    "en": "Exceeded maximum recommended game limit"
+  },
+  "1111": {
+    "zh": "当前公告不能删除",
+    "pt": "O anúncio atual não pode ser excluído",
+    "en": "The current announcement cannot be deleted"
+  },
+  "1112": {
+    "zh": "活动开启时不能更新配置",
+    "pt": "Não é possível atualizar a configuração enquanto a atividade está aberta",
+    "en": "Cannot update configuration while activity is open"
+  },
+  "1113": {
+    "zh": "存在正在导出的任务",
+    "pt": "Há tarefas sendo exportadas",
+    "en": "There are tasks being exported"
+  },
+  "1114": {
+    "zh": "在提现订单未完结之前不能再发起提现",
+    "pt": "Você não pode iniciar um saque antes que o pedido de saque seja concluído",
+    "en": "You cannot initiate a withdrawal before the withdrawal order is completed."
+  },
+  "1115": {
+    "zh": "账户权限发生变化，请重新登录",
+    "pt": "As permissões da conta foram alteradas, logue novamente",
+    "en": "Account permissions have changed, please log in again"
+  },
+  "1116": {
+    "zh": "充值热门选项已达上限",
+    "pt": "Limite de recarga para opções populares atingido",
+    "en": "The top-up limit for popular options has been reached"
+  },
+  "1117": {
+    "zh": "充值非热门选项已达上限",
+    "pt": "Limite de recarga para opções não populares atingido",
+    "en": "The top-up limit for non-popular options has been reached"
+  },
+  "1118": {
+    "zh": "代理名称已存在",
+    "pt": "Nome de agente já existe",
+    "en": "Agent name already exists"
+  },
+  "1119": {
+    "zh": "活动已开启，无法修改活动开始时间",
+    "pt": "O evento começou e o horário de início não pode ser modificado",
+    "en": "The event has started and the start time cannot be modified"
+  },
+  "1120": {
+    "zh": "租户站点Code已存在",
+    "pt": "Código de site do inquilino já existe",
+    "en": ""
+  },
+  "1121": {
+    "zh": "订单正在操作中，请稍后重试",
+    "pt": "Pedido em processamento, tente novamente mais tarde",
+    "en": ""
+  },
+  "1122": {
+    "zh": "主域名未配置",
+    "pt": "Domínio principal não configurado",
+    "en": ""
+  },
+  "1123": {
+    "zh": "站点Logo未配置",
+    "pt": "Logo do site não configurado",
+    "en": ""
+  },
+  "1124": {
+    "zh": "站点欢迎页Splash未配置",
+    "pt": "Splash page de boas-vindas do site não configurada",
+    "en": ""
+  },
+  "1125": {
+    "zh": "该域名不是主域名",
+    "pt": "Este domínio não é o domínio principal",
+    "en": ""
+  }
+}
