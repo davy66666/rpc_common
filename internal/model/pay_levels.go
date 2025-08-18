@@ -10,7 +10,7 @@ import (
 func PayLevelFindOne(ex g.Ex) (types.PayLevel, error) {
 
 	var data types.PayLevel
-	query, _, _ := meta.Dialect.From("pay_levels").Where(ex).Order(g.C("id").Desc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("pay_levels").Select(PayLevelFields...).Where(ex).Order(g.C("id").Desc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Get(&data, query)
 

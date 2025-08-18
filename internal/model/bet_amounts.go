@@ -10,7 +10,7 @@ import (
 func BetAmountFindOne(ex g.Ex) (types.BetAmount, error) {
 
 	var data types.BetAmount
-	query, _, _ := meta.Dialect.From("bet_amounts").Where(ex).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("bet_amounts").Select(BetAmountFields...).Where(ex).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Get(&data, query)
 

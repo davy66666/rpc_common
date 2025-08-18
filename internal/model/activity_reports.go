@@ -10,7 +10,7 @@ import (
 func ActivityReportFindOne(ex g.Ex) (types.ActivityReport, error) {
 
 	var data types.ActivityReport
-	query, _, _ := meta.Dialect.From("activity_reports").Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("activity_reports").Select(ActivityReportFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.ActivityDb.Get(&data, query)
 

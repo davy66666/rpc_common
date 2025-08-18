@@ -2,10 +2,12 @@ package model
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	json "github.com/bytedance/sonic"
 	"github.com/davy66666/rpc_service/common/utils/strx"
 	"github.com/davy66666/rpc_service/internal/types"
+	"github.com/redis/go-redis/v9"
 
 	g "github.com/doug-martin/goqu/v9"
 )
@@ -13,7 +15,7 @@ import (
 func FissionSettingFindOne(ex g.Ex) (types.FissionSetting, error) {
 
 	var data types.FissionSetting
-	query, _, _ := meta.Dialect.From("fission_setting").Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("fission_setting").Select(FissionSettingFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Get(&data, query)
 
@@ -35,7 +37,7 @@ func FissionSettingInsert(data *types.FissionSetting) (int64, error) {
 func GetFissionSetting(ex g.Ex) ([]*types.FissionSetting, error) {
 
 	var data []*types.FissionSetting
-	query, _, _ := meta.Dialect.From("fission_setting").Where(ex).ToSQL()
+	query, _, _ := meta.Dialect.From("fission_setting").Select(FissionSettingFields...).Where(ex).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Select(&data, query)
 
@@ -46,7 +48,7 @@ func RedisGetFissionSetting(ctx context.Context) ([]*types.FissionSetting, error
 
 	var data []*types.FissionSetting
 	result, err := meta.Rds.Get(ctx, SysKey).Result()
-	if err != nil {
+	if err != nil && !errors.Is(err, redis.Nil) {
 		return data, err
 	}
 
@@ -59,7 +61,7 @@ func RedisGetFissionSetting(ctx context.Context) ([]*types.FissionSetting, error
 		return data, nil
 	}
 
-	query, _, _ := meta.Dialect.From("fission_setting").Where(g.Ex{"is_open": 1}).ToSQL()
+	query, _, _ := meta.Dialect.From("fission_setting").Select(FissionSettingFields...).Where(g.Ex{"is_open": 1}).ToSQL()
 	fmt.Println(query)
 	err = meta.SqlxDb.Select(&data, query)
 	if err != nil {

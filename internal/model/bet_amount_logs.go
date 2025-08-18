@@ -10,7 +10,7 @@ import (
 func BetAmountLogFindOne(ex g.Ex) (types.BetAmountLog, error) {
 
 	var data types.BetAmountLog
-	query, _, _ := meta.Dialect.From("bet_amount_logs").Where(ex).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("bet_amount_logs").Select(BetAmountLogFields...).Where(ex).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.LogDb.Get(&data, query)
 

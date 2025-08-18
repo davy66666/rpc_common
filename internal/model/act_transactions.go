@@ -10,7 +10,7 @@ import (
 func ActTransactionFindOne(ex g.Ex) (types.ActTransaction, error) {
 
 	var data types.ActTransaction
-	query, _, _ := meta.Dialect.From("act_transactions").Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("act_transactions").Select(ActTransactionFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.ActivityDb.Get(&data, query)
 

@@ -10,7 +10,7 @@ import (
 func ClearBetAmountLogFindOne(ex g.Ex) (types.ClearBetAmountLog, error) {
 
 	var data types.ClearBetAmountLog
-	query, _, _ := meta.Dialect.From("clear_bet_amount_logs").Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("clear_bet_amount_logs").Select(ClearBetAmountLogFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.LogDb.Get(&data, query)
 
@@ -32,7 +32,7 @@ func ClearBetAmountLogInsert(data *types.ClearBetAmountLog) (int64, error) {
 func GetClearBetAmountLog(ex g.Ex) ([]*types.ClearBetAmountLog, error) {
 
 	var data []*types.ClearBetAmountLog
-	query, _, _ := meta.Dialect.From("clear_bet_amount_logs").Where(ex).ToSQL()
+	query, _, _ := meta.Dialect.From("clear_bet_amount_logs").Select(ClearBetAmountLogFields...).Where(ex).ToSQL()
 	fmt.Println(query)
 	err := meta.LogDb.Select(&data, query)
 

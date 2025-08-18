@@ -4,26 +4,15 @@ import (
 	"context"
 	"fmt"
 	json "github.com/bytedance/sonic"
+	"github.com/davy66666/rpc_service/internal/types"
 	g "github.com/doug-martin/goqu/v9"
 	"github.com/olivere/elastic/v7"
-	"github.com/davy66666/rpc_service/internal/types"
-	"strconv"
 )
-
-func TransactionTypeFindOne(ex g.Ex) (types.TransactionType, error) {
-
-	var data types.TransactionType
-	query, _, _ := meta.Dialect.From("transaction_types").Where(ex).Limit(1).ToSQL()
-	fmt.Println(query)
-	err := meta.SqlxDb.Get(&data, query)
-
-	return data, err
-}
 
 func TransactionFindAll(ex g.Ex) ([]*types.Transaction, error) {
 
 	var data []*types.Transaction
-	query, _, _ := meta.Dialect.From("transactions").Where(ex).ToSQL()
+	query, _, _ := meta.Dialect.From("transactions").Select(TransactionFields...).Where(ex).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Select(&data, query)
 
@@ -33,7 +22,7 @@ func TransactionFindAll(ex g.Ex) ([]*types.Transaction, error) {
 func TransactionLastOne(ex g.Ex) (types.Transaction, error) {
 
 	var data types.Transaction
-	query, _, _ := meta.Dialect.From("transactions").Where(ex).Order(g.C("id").Desc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("transactions").Select(TransactionFields...).Where(ex).Order(g.C("id").Desc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Get(&data, query)
 
@@ -43,7 +32,7 @@ func TransactionLastOne(ex g.Ex) (types.Transaction, error) {
 func GetTransaction(ex g.Ex) ([]*types.Transaction, error) {
 
 	var data []*types.Transaction
-	query, _, _ := meta.Dialect.From("transactions").Where(ex).Order(g.C("id").Desc()).ToSQL()
+	query, _, _ := meta.Dialect.From("transactions").Select(TransactionFields...).Where(ex).Order(g.C("id").Desc()).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Select(&data, query)
 
@@ -142,29 +131,4 @@ func TransAggByUserAndFatherId(ctx context.Context, userIds []int64, transFather
 	}
 
 	return result, nil
-}
-
-func EsTransaction(ctx context.Context, id int64) error {
-
-	var data types.TransactionType
-	query, _, _ := meta.Dialect.From("transaction_types").Where(g.Ex{"id": id}).Limit(1).ToSQL()
-	fmt.Println(query)
-	err := meta.SqlxDb.Get(&data, query)
-	if err != nil {
-		return err
-	}
-
-	// 写入
-	_, err = meta.EsClient.Index().
-		Index("transactions").
-		Id(strconv.FormatInt(id, 10)).
-		BodyJson(data).
-		Refresh("wait_for"). //sync方式的写入
-		Do(ctx)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

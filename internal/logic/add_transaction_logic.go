@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"github.com/jinzhu/copier"
 	"math/rand"
@@ -41,9 +42,12 @@ func NewAddTransactionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ad
 func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.AddTransactionResp, error) {
 
 	var (
-		resp *api.AddTransactionResp
+		resp = &api.AddTransactionResp{}
 	)
 
+	nowTime := sql.NullTime{
+		Time: time.Now(),
+	}
 	if in.Amount == 0 {
 		resp.Status = values.TRANS_CREATE_ERROR_DATA
 		return resp, errors.New("")
@@ -91,7 +95,14 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 
 	// 赠送彩金同步赠送彩金表
 	if in.ExtraData.IsSyncGiftMoneyTransaction != 0 {
-		err = model.GiftMoneyTransactionsInsert(tran)
+
+		var item types.GiftMoneyTransaction
+		err = copier.Copy(&item, tran)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+
+		err = model.GiftMoneyTransactionsInsert(&item)
 		if err != nil {
 			return resp, err
 		}
@@ -99,15 +110,15 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 
 	//统计打码量
 	if in.ExtraData.BetAmount != 0 {
-		in.ExtraData.BetAmount = in.ExtraData.BetAmount * transactionType.BetAmount
+		in.ExtraData.BetAmount = in.ExtraData.BetAmount * float64(transactionType.BetAmount)
 	} else {
-		in.ExtraData.BetAmount = in.Amount * transactionType.BetAmount
+		in.ExtraData.BetAmount = in.Amount * float64(transactionType.BetAmount)
 	}
 	in.ExtraData.Username = tran.Username
 	in.ExtraData.TransactionID = id
 
 	//重置的时候 把用户的打码量更新到打码量表
-	err = l.DealBetAmount(in.ExtraData, transactionType)
+	err = l.DealBetAmount(in.ExtraData, transactionType, nowTime)
 	if err != nil {
 		resp.Status = values.TRANS_BET_AMOUNT_ERROR
 		return resp, err
@@ -121,7 +132,7 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 	}
 
 	if u.PayLevel != 0 {
-		if in.Amount > level.IncomeMaxLimit {
+		if in.Amount > float64(level.IncomeMaxLimit) {
 			resp.Status = values.TRANS_INCOME_MAX_LIMIT
 			return resp, nil
 		}
@@ -160,7 +171,7 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 					NewPayLevelID: userPayLevel.ID,
 					AdminUser:     "system_auto",
 					Remark:        "管理后台自动触发",
-					CreatedAt:     time.Now(),
+					CreatedAt:     nowTime,
 				}
 				_, err = model.LevelUpgradeLogInsert(&ulog)
 				if err != nil {
@@ -178,7 +189,7 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 			return resp, err
 		}
 
-		err = l.UpdateFirstAndLastDeposit(u, tr)
+		err = l.UpdateFirstAndLastDeposit(u, tr, nowTime)
 		if err != nil {
 			return resp, err
 		}
@@ -192,7 +203,7 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 	}
 
 	now := time.Now()
-	if activity.StartTime.Before(now) && activity.EndTime.After(now) && activity.Status == 1 && transactionType.ParentID == 2 {
+	if activity.StartTime.Time.Before(now) && activity.EndTime.Time.After(now) && activity.Status == 1 && transactionType.ParentID == 2 {
 		tu, err := model.TeamUserFindOne(g.Ex{"user_id": tran.UserID})
 		if err != nil {
 			return resp, err
@@ -219,7 +230,7 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 			reportex := g.Ex{"id": report.ID}
 			reportrecord := g.Record{}
 			reportrecord["total_deposit"] = g.L("total_deposit + ?", tran.Amount)
-			reportrecord["updated_at"] = time.Now()
+			reportrecord["updated_at"] = nowTime
 			err = model.ActivityReportUpdate(reportex, reportrecord)
 			if err != nil {
 				return resp, err
@@ -228,8 +239,8 @@ func (l *AddTransactionLogic) AddTransaction(in *api.AddTransactionReq) (*api.Ad
 			r := types.ActivityReport{
 				TotalDeposit: tran.Amount,
 				UserID:       tu.LeaderID,
-				CreatedAt:    time.Now(),
-				UpdatedAt:    time.Now(),
+				CreatedAt:    nowTime,
+				UpdatedAt:    nowTime,
 			}
 			_, err = model.ActivityReportInsert(&r)
 			if err != nil {
@@ -279,9 +290,9 @@ func CompileTransactionData(
 		MerchantNum:       in.ExtraData.MerchantNum,
 		ThirdTrackNum:     in.ExtraData.ThirdTrackNum,
 		Issue:             in.ExtraData.Issue,
-		CreatedAt:         time.Now(),
-		UpdatedAt:         time.Now(),
-		IsTester:          in.ExtraData.IsTester,
+		//CreatedAt:         time.Now(),
+		//UpdatedAt:         time.Now(),
+		IsTester: in.ExtraData.IsTester,
 	}
 
 	// Optional fields
@@ -341,7 +352,7 @@ func CompileTransactionData(
 	return attr
 }
 
-func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransactionType types.TransactionType) error {
+func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransactionType types.TransactionType, nowTime sql.NullTime) error {
 
 	ex := g.Ex{}
 	ex["user_id"] = aExtraData.UserId
@@ -395,8 +406,8 @@ func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransact
 				UserID:               aExtraData.UserId,
 				Username:             aExtraData.Username,
 				UserGameBetAmountIds: idstr,
-				CreatedAt:            time.Now(),
-				UpdatedAt:            time.Now(),
+				CreatedAt:            nowTime,
+				UpdatedAt:            nowTime,
 			}
 			id, err := model.ClearBetAmountLogInsert(&alog)
 			if err != nil {
@@ -442,7 +453,7 @@ func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransact
 				UserID:    aExtraData.UserId,
 				Username:  aExtraData.Username,
 				IsOpen:    1,
-				CreatedAt: time.Now(),
+				CreatedAt: nowTime,
 			}
 			_, err = model.BetAmountInsert(&ba)
 			if err != nil {
@@ -482,7 +493,7 @@ func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransact
 				UserID:      aExtraData.UserId,
 				Username:    aExtraData.Username,
 				IsOpen:      1,
-				CreatedAt:   time.Now(),
+				CreatedAt:   nowTime,
 			}
 			_, err = model.BetAmountInsert(&ba)
 			if err != nil {
@@ -497,7 +508,7 @@ func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransact
 			State:         1,
 			TransactionID: aExtraData.TransactionID,
 			Remark:        aExtraData.Remark,
-			CreatedAt:     time.Now(),
+			CreatedAt:     nowTime,
 		}
 		_, err = model.BetAmountLogInsert(&bal)
 		if err != nil {
@@ -508,7 +519,7 @@ func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransact
 	return nil
 }
 
-func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran types.Transaction) error {
+func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran types.Transaction, nowTime sql.NullTime) error {
 
 	fs, err := model.RedisGetFissionSetting(l.ctx)
 	if err != nil {
@@ -566,8 +577,8 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 			}
 		}
 
-		if u.FirstRechargeAt.IsZero() || tran.CreatedAt.Before(u.FirstRechargeAt) {
-			user.FirstRechargeAt = tran.CreatedAt
+		if u.FirstRechargeAt.Time.IsZero() || tran.CreatedAt.Time.Before(u.FirstRechargeAt.Time) {
+			user.FirstRechargeAt.Time = tran.CreatedAt.Time
 			user.FirstRechargeAmount = tran.Amount
 
 			if tran.Amount > 100 {
@@ -616,8 +627,8 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 					RewardType:             values.REWARD_TYPE_FIRST_RECHARGE,
 					Money:                  rewardMoney,
 					RewardStatus:           0,
-					CreatedAt:              time.Now(),
-					UpdatedAt:              time.Now(),
+					CreatedAt:              nowTime,
+					UpdatedAt:              nowTime,
 					UsernameParentName:     u.ParentName,
 					FromUsernameParentName: user.ParentName,
 				}
@@ -648,8 +659,8 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 							FromUsername:           user.Username,
 							Money:                  rv,
 							RewardStatus:           0,
-							CreatedAt:              time.Now(),
-							UpdatedAt:              time.Now(),
+							CreatedAt:              nowTime,
+							UpdatedAt:              nowTime,
 							UsernameParentName:     u.ParentName,
 							FromUsernameParentName: user.ParentName,
 							RewardType:             values.REWARD_TYPE_FRIEND_FIRST_DEPOSIT_EXCLUSIVE_REWARD, // 0好友绑定账户,1好友首充,2好友打码返利,3好友负盈利比例,4好友充值比例,5线下陪玩,6好友首存专属奖励
@@ -686,8 +697,8 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 					FromUsername:           user.Username,
 					Money:                  rewardMoney,
 					RewardStatus:           0,
-					CreatedAt:              time.Now(),
-					UpdatedAt:              time.Now(),
+					CreatedAt:              nowTime,
+					UpdatedAt:              nowTime,
 					UsernameParentName:     u.ParentName,
 					FromUsernameParentName: user.ParentName,
 					RewardType:             values.REWARD_TYPE_FRIEND_RECHARGE_RATIO, // 0好友绑定账户,1好友首充,2好友打码返利,3好友负盈利比例,4好友充值比例,5线下陪玩,6好友首存专属奖励
@@ -699,8 +710,8 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 			}
 		}
 
-		if user.LastRechargeAt.IsZero() || tran.CreatedAt.After(user.LastRechargeAt) {
-			user.LastRechargeAt = tran.CreatedAt
+		if user.LastRechargeAt.Time.IsZero() || tran.CreatedAt.Time.After(user.LastRechargeAt.Time) {
+			user.LastRechargeAt.Time = tran.CreatedAt.Time
 			user.LastRechargeAmount = tran.Amount
 		}
 		if user.MaxRechargeAmount == 0 || tran.Amount > user.MaxRechargeAmount {
@@ -710,9 +721,9 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 		uex := g.Ex{"id": user.ID}
 		urecord := g.Record{}
 		urecord["max_recharge_amount"] = user.MaxRechargeAmount
-		urecord["last_recharge_at"] = user.LastRechargeAt
+		urecord["last_recharge_at"] = user.LastRechargeAt.Time
 		urecord["last_recharge_amount"] = user.LastRechargeAmount
-		urecord["first_recharge_at"] = user.FirstRechargeAt
+		//urecord["first_recharge_at"] = user.FirstRechargeAt.Time
 		urecord["first_recharge_amount"] = user.FirstRechargeAmount
 		err = model.UserUpdate(uex, urecord)
 		if err != nil {

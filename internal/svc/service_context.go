@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"github.com/davy66666/rpc_service/common/utils/elasticx"
 	g "github.com/doug-martin/goqu/v9"
 	"github.com/streadway/amqp"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -9,6 +10,7 @@ import (
 	"github.com/davy66666/rpc_service/common/utils/rabbitmqc"
 	"github.com/davy66666/rpc_service/internal/config"
 	"github.com/davy66666/rpc_service/internal/model"
+	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 )
 
 type ServiceContext struct {
@@ -27,7 +29,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	mt.Rds = dbx.MustRedis(c.RedisConf)
 	conn := rabbitmqc.MustProducer(c.RabbitMqConf)
 	//mt.Dbm1Db = dbx.MustSqlxPostgres(c.Mysql.Dbm1DB)
-	//mt.EsClient = elasticx.MustElastic(c.ElasticConf)
+	mt.EsClient = elasticx.MustElastic(c.ElasticConf)
 	model.Constructor(mt)
 	return &ServiceContext{
 		Config:   c,

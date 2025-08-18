@@ -11,7 +11,7 @@ import (
 func FissionRewardFindOne(ex g.Ex) (types.FissionReward, error) {
 
 	var data types.FissionReward
-	query, _, _ := meta.Dialect.From("fission_reward").Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("fission_reward").Select(FissionRewardFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Get(&data, query)
 
@@ -33,7 +33,7 @@ func FissionRewardInsert(data *types.FissionReward) (int64, error) {
 func GetFissionReward(ex g.Ex) ([]*types.FissionReward, error) {
 
 	var data []*types.FissionReward
-	query, _, _ := meta.Dialect.From("fission_reward").Where(ex).ToSQL()
+	query, _, _ := meta.Dialect.From("fission_reward").Select(FissionRewardFields...).Where(ex).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Select(&data, query)
 

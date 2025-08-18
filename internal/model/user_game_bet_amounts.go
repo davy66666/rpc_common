@@ -10,7 +10,7 @@ import (
 func UserGameBetAmountFindOne(ex g.Ex) (types.UserGameBetAmount, error) {
 
 	var data types.UserGameBetAmount
-	query, _, _ := meta.Dialect.From("user_game_bet_amounts").Where(ex).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("user_game_bet_amounts").Select(UserGameBetAmountFields...).Where(ex).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Get(&data, query)
 
@@ -20,7 +20,7 @@ func UserGameBetAmountFindOne(ex g.Ex) (types.UserGameBetAmount, error) {
 func GetUserGameBetAmount(ex g.Ex) ([]*types.UserGameBetAmount, error) {
 
 	var data []*types.UserGameBetAmount
-	query, _, _ := meta.Dialect.From("user_game_bet_amounts").Where(ex).ToSQL()
+	query, _, _ := meta.Dialect.From("user_game_bet_amounts").Select(UserGameBetAmountFields...).Where(ex).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Select(&data, query)
 

@@ -11,7 +11,7 @@ import (
 func FissionExclusiveRewardFindOne(ex g.Ex) (types.FissionExclusiveReward, error) {
 
 	var data types.FissionExclusiveReward
-	query, _, _ := meta.Dialect.From("fission_exclusive_rewards").Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("fission_exclusive_rewards").Select(FissionExclusiveRewardFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Get(&data, query)
 
@@ -33,7 +33,7 @@ func FissionExclusiveRewardInsert(data *types.FissionExclusiveReward) (int64, er
 func GetFissionExclusiveReward(ex g.Ex) ([]*types.FissionExclusiveReward, error) {
 
 	var data []*types.FissionExclusiveReward
-	query, _, _ := meta.Dialect.From("fission_exclusive_rewards").Where(ex).ToSQL()
+	query, _, _ := meta.Dialect.From("fission_exclusive_rewards").Select(FissionExclusiveRewardFields...).Where(ex).ToSQL()
 	fmt.Println(query)
 	err := meta.SqlxDb.Select(&data, query)
 
@@ -43,7 +43,7 @@ func GetFissionExclusiveReward(ex g.Ex) ([]*types.FissionExclusiveReward, error)
 func GetFissionExclusiveRewardFirst(exclusiveRewardsType int, userLevel string, payLevel int64) (types.FissionExclusiveReward, error) {
 
 	var data types.FissionExclusiveReward
-	ds := meta.Dialect.From("fission_exclusive_rewards").Where(g.Ex{"type": exclusiveRewardsType})
+	ds := meta.Dialect.From("fission_exclusive_rewards").Where(g.Ex{"type": exclusiveRewardsType}).Select(FissionExclusiveRewardFields...)
 	// 添加 FIND_IN_SET 条件
 	var level string
 	if exclusiveRewardsType == 1 {

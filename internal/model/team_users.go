@@ -10,9 +10,9 @@ import (
 func TeamUserFindOne(ex g.Ex) (types.TeamUser, error) {
 
 	var data types.TeamUser
-	query, _, _ := meta.Dialect.From("team_users").Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
+	query, _, _ := meta.Dialect.From("team_users").Select(TeamUserFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
 	fmt.Println(query)
-	err := meta.SqlxDb.Get(&data, query)
+	err := meta.ActivityDb.Get(&data, query)
 
 	return data, err
 }
@@ -21,7 +21,7 @@ func TeamUserUpdate(ex g.Ex, record g.Record) error {
 
 	query, _, _ := meta.Dialect.Update("team_users").Set(record).Where(ex).Limit(1).ToSQL()
 	fmt.Println(query)
-	_, err := meta.SqlxDb.Exec(query)
+	_, err := meta.ActivityDb.Exec(query)
 
 	return err
 }
@@ -30,7 +30,7 @@ func TeamUserInsert(data *types.TeamUser) (int64, error) {
 
 	query, _, _ := meta.Dialect.Insert("team_users").Rows(data).ToSQL()
 	fmt.Println(query)
-	res, err := meta.SqlxDb.Exec(query)
+	res, err := meta.ActivityDb.Exec(query)
 	if err != nil {
 		return 0, err
 	}
