@@ -28,7 +28,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	mt.PGDialect = g.Dialect("postgres")
 	mt.Rds = dbx.MustRedis(c.RedisConf)
 	conn := rabbitmqc.MustProducer(c.RabbitMqConf)
-	//mt.Dbm1Db = dbx.MustSqlxPostgres(c.Mysql.Dbm1DB)
 	mt.EsClient = elasticx.MustElastic(c.ElasticConf)
 	model.Constructor(mt)
 	return &ServiceContext{

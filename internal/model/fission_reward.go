@@ -30,16 +30,6 @@ func FissionRewardInsert(data *types.FissionReward) (int64, error) {
 	return res.RowsAffected()
 }
 
-func GetFissionReward(ex g.Ex) ([]*types.FissionReward, error) {
-
-	var data []*types.FissionReward
-	query, _, _ := meta.Dialect.From("fission_reward").Select(FissionRewardFields...).Where(ex).ToSQL()
-	fmt.Println(query)
-	err := meta.SqlxDb.Select(&data, query)
-
-	return data, err
-}
-
 func FissionRewardCount(ex g.Ex) (int, error) {
 
 	n := 0

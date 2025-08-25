@@ -417,38 +417,10 @@ func (l *AddTransactionLogic) DealBetAmount(aExtraData *api.ExtraData, oTransact
 			logMap := make(map[string]interface{})
 			logMap["log_id"] = id
 			logMap["user_id"] = aExtraData.UserId
-			// 创建Channel
-			ch, err := l.svcCtx.Rabbitmq.Channel()
-			if err != nil {
-				logx.Errorf("rabbitmq Channel error: %v", err)
-				return err
-			}
-			defer ch.Close()
 
-			logMapStr, err := json.Marshal(logMap)
-			if err != nil {
-				logx.Errorf("Marshal Error: %v", err)
-				return err
-			}
-
-			// 发布消息
-			err = ch.Publish(
-				"",                 // 使用默认交换机
-				"KsClearBetAmount", // 路由键（这里直接用队列名）
-				false,              // 强制标志（如果队列不存在则报错）
-				false,              // 立即标志（如果无消费者则报错）
-				amqp.Publishing{
-					DeliveryMode: amqp.Persistent, // 消息持久化（服务重启后仍存在）
-					ContentType:  "text/plain",
-					Body:         logMapStr,
-				})
-			if err != nil {
-				logx.Errorf("rabbitmq push error: %v", err)
-				return err
-			}
+			l.ClearBetAmountJob(logMap)
 
 			//从新插入新的数据
-			//$newData['pre_total_amount'] = $oBetAmount->pre_total_amount + $oBetAmount->user_amount; // 用户之前的打码量+实际打码量
 			ba := types.BetAmount{
 				UserID:    aExtraData.UserId,
 				Username:  aExtraData.Username,
@@ -544,7 +516,6 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 
 		var (
 			exclusiveRewardsType int
-			//firstRechargeReward  int
 			fissionInviterReward []types.FissionInviterReward
 		)
 		f, ok := fsMap[values.FISSION_EXCLUSIVE_REWARDS]
@@ -556,16 +527,6 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 
 			exclusiveRewardsType = num
 		}
-
-		//f, ok = fsMap[values.FISSION_FIRST_RECHARGE_REWARD]
-		//if ok {
-		//	num, err := strconv.Atoi(f.FissionVal)
-		//	if err != nil {
-		//		return err
-		//	}
-		//
-		//	firstRechargeReward = num
-		//}
 
 		f, ok = fsMap[values.FISSION_INVITE_REWARDS]
 		if ok {
@@ -729,6 +690,41 @@ func (l *AddTransactionLogic) UpdateFirstAndLastDeposit(user types.User, tran ty
 		if err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (l *AddTransactionLogic) ClearBetAmountJob(logMap map[string]interface{}) error {
+
+	// 创建Channel
+	ch, err := l.svcCtx.Rabbitmq.Channel()
+	if err != nil {
+		logx.Errorf("rabbitmq Channel error: %v", err)
+		return err
+	}
+	defer ch.Close()
+
+	logMapStr, err := json.Marshal(logMap)
+	if err != nil {
+		logx.Errorf("Marshal Error: %v", err)
+		return err
+	}
+
+	// 发布消息
+	err = ch.Publish(
+		"",                 // 使用默认交换机
+		"KsClearBetAmount", // 路由键（这里直接用队列名）
+		false,              // 强制标志（如果队列不存在则报错）
+		false,              // 立即标志（如果无消费者则报错）
+		amqp.Publishing{
+			DeliveryMode: amqp.Persistent, // 消息持久化（服务重启后仍存在）
+			ContentType:  "text/plain",
+			Body:         logMapStr,
+		})
+	if err != nil {
+		logx.Errorf("rabbitmq push error: %v", err)
+		return err
 	}
 
 	return nil

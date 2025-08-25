@@ -28,13 +28,3 @@ func ClearBetAmountLogInsert(data *types.ClearBetAmountLog) (int64, error) {
 
 	return res.RowsAffected()
 }
-
-func GetClearBetAmountLog(ex g.Ex) ([]*types.ClearBetAmountLog, error) {
-
-	var data []*types.ClearBetAmountLog
-	query, _, _ := meta.Dialect.From("clear_bet_amount_logs").Select(ClearBetAmountLogFields...).Where(ex).ToSQL()
-	fmt.Println(query)
-	err := meta.LogDb.Select(&data, query)
-
-	return data, err
-}

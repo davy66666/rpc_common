@@ -25,15 +25,3 @@ func TeamUserUpdate(ex g.Ex, record g.Record) error {
 
 	return err
 }
-
-func TeamUserInsert(data *types.TeamUser) (int64, error) {
-
-	query, _, _ := meta.Dialect.Insert("team_users").Rows(data).ToSQL()
-	fmt.Println(query)
-	res, err := meta.ActivityDb.Exec(query)
-	if err != nil {
-		return 0, err
-	}
-
-	return res.RowsAffected()
-}

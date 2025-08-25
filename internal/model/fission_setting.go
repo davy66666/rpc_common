@@ -12,38 +12,6 @@ import (
 	g "github.com/doug-martin/goqu/v9"
 )
 
-func FissionSettingFindOne(ex g.Ex) (types.FissionSetting, error) {
-
-	var data types.FissionSetting
-	query, _, _ := meta.Dialect.From("fission_setting").Select(FissionSettingFields...).Where(ex).Order(g.C("id").Asc()).Limit(1).ToSQL()
-	fmt.Println(query)
-	err := meta.SqlxDb.Get(&data, query)
-
-	return data, err
-}
-
-func FissionSettingInsert(data *types.FissionSetting) (int64, error) {
-
-	query, _, _ := meta.Dialect.Insert("fission_setting").Rows(data).ToSQL()
-	fmt.Println(query)
-	res, err := meta.SqlxDb.Exec(query)
-	if err != nil {
-		return 0, err
-	}
-
-	return res.RowsAffected()
-}
-
-func GetFissionSetting(ex g.Ex) ([]*types.FissionSetting, error) {
-
-	var data []*types.FissionSetting
-	query, _, _ := meta.Dialect.From("fission_setting").Select(FissionSettingFields...).Where(ex).ToSQL()
-	fmt.Println(query)
-	err := meta.SqlxDb.Select(&data, query)
-
-	return data, err
-}
-
 func RedisGetFissionSetting(ctx context.Context) ([]*types.FissionSetting, error) {
 
 	var data []*types.FissionSetting

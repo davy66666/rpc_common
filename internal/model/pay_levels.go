@@ -16,24 +16,3 @@ func PayLevelFindOne(ex g.Ex) (types.PayLevel, error) {
 
 	return data, err
 }
-
-func PayLevelUpdate(ex g.Ex, record g.Record) error {
-
-	query, _, _ := meta.Dialect.Update("pay_levels").Set(record).Where(ex).Limit(1).ToSQL()
-	fmt.Println(query)
-	_, err := meta.SqlxDb.Exec(query)
-
-	return err
-}
-
-func PayLevelInsert(data *types.PayLevel) (int64, error) {
-
-	query, _, _ := meta.Dialect.Insert("pay_levels").Rows(data).ToSQL()
-	fmt.Println(query)
-	res, err := meta.SqlxDb.Exec(query)
-	if err != nil {
-		return 0, err
-	}
-
-	return res.RowsAffected()
-}
