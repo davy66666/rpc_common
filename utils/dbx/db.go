@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"rabbitmq/common/utils/loggerx"
+	"github.com/davy66666/rpc_common/utils/loggerx"
 
 	sqlxx "github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"

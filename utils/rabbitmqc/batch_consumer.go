@@ -11,7 +11,7 @@ import (
 
 	"github.com/streadway/amqp"
 	//"github.com/zeromicro/go-zero/core/logx"
-	//xerror "rabbitmq/common/utils/errorx"
+	//xerror "github.com/davy66666/rpc_common/utils/errorx"
 )
 
 type BatchConsumer struct {

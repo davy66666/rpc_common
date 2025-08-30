@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"rabbitmq/common/utils/idx"
-	"rabbitmq/common/utils/imagex"
+	"github.com/davy66666/rpc_common/utils/idx"
+	"github.com/davy66666/rpc_common/utils/imagex"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"

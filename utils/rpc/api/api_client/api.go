@@ -6,7 +6,7 @@ package api_client
 import (
 	"context"
 
-	"rabbitmq/common/utils/rpc/api"
+	"github.com/davy66666/rpc_common/utils/rpc/api"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

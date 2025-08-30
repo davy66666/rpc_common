@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"rabbitmq/common/value"
+	"github.com/davy66666/rpc_common/value"
 	"strings"
 	"sync/atomic"
 	"time"
