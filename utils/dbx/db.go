@@ -1,8 +1,12 @@
 package dbx
 
 import (
+	"context"
 	"fmt"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
+	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/davy66666/rpc_common/utils/loggerx"
@@ -10,6 +14,7 @@ import (
 	sqlxx "github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
@@ -28,8 +33,14 @@ type PgsqlConf struct {
 	DataSource string
 }
 type MongoConf struct {
-	Uri      string
-	Database string
+	Host         string
+	Port         int
+	Username     string
+	Password     string
+	Database     string
+	MaxIdleConn  int    // 空闲连接池中的最大连接数
+	MaxOpenConn  int    // 数据库的最大打开连接数
+	AuthDatabase string `json:",default=admin"` // 认证数据库
 }
 
 type DBConf struct {
@@ -150,4 +161,75 @@ func MustSqlxPostgres(c DBConf) *sqlxx.DB {
 	}
 
 	return db
+}
+
+func MustMongodb(ctx context.Context, c MongoConf) (*mongo.Database, error) {
+	// 如果有用户名和密码，则构建带有认证信息的 URI
+	var uri string
+	if c.Username != "" && c.Password != "" {
+		uri = fmt.Sprintf("mongodb://%s:%s@%s:%d/%s?%s",
+			url.QueryEscape(c.Username),
+			url.QueryEscape(c.Password),
+			c.Host,
+			c.Port,
+			c.Database,
+			url.Values{
+				"authSource":    []string{c.AuthDatabase}, // 认证数据库（默认admin）
+				"maxPoolSize":   []string{strconv.Itoa(c.MaxOpenConn)},
+				"wtimeoutMS":    []string{"5000"},
+				"socketTimeout": []string{"30000"},
+			}.Encode(),
+		)
+	} else {
+		// 如果没有用户名和密码，则构建一个无认证的 URI
+		uri = fmt.Sprintf("mongodb://%s:%d/%s?%s",
+			c.Host,
+			c.Port,
+			c.Database,
+			url.Values{
+				"maxPoolSize":   []string{strconv.Itoa(c.MaxOpenConn)},
+				"wtimeoutMS":    []string{"5000"},
+				"socketTimeout": []string{"30000"},
+			}.Encode(),
+		)
+	}
+
+	// 配置客户端选项（包括连接池、超时等）
+	clientOptions := options.Client().
+		ApplyURI(uri).
+		SetConnectTimeout(10 * time.Second).
+		SetServerSelectionTimeout(5 * time.Second).
+		SetMaxPoolSize(100). // 连接池上限
+		SetMinPoolSize(10). // 连接池下限
+		SetRetryReads(true). // 自动重试读操作
+		SetHeartbeatInterval(10 * time.Second) // 心跳检测
+
+	// 建立 MongoDB 连接
+	client, err := mongo.Connect(ctx, clientOptions)
+	if err != nil {
+		return nil, fmt.Errorf("MongoDB connection failed: %w (URI: %s)", err, maskURI(uri))
+	}
+
+	// 健康检查（带超时控制）
+	pingCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+	if err = client.Ping(pingCtx, nil); err != nil {
+		_ = client.Disconnect(ctx) // 立即释放资源
+		return nil, fmt.Errorf("MongoDB ping failed: %w", err)
+	}
+
+	// 返回 MongoDB 数据库对象
+	return client.Database(c.Database), nil
+}
+
+// 安全脱敏URI（用于日志）
+func maskURI(uri string) string {
+	u, _ := url.Parse(uri)
+	if u == nil {
+		return "invalid_uri"
+	}
+	if u.User != nil {
+		u.User = url.UserPassword(u.User.Username(), "******")
+	}
+	return u.String()
 }
