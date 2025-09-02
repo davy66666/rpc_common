@@ -127,7 +127,7 @@ func NewSilentMysql(c MysqlConf) sqlx.SqlConn {
 
 func MustSqlxDB(c DBConf) *sqlxx.DB {
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4", c.Username, c.Password, c.Host, c.Port, c.Database)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=true", c.Username, c.Password, c.Host, c.Port, c.Database)
 	db, err := sqlxx.Connect("mysql", dsn)
 	if err != nil {
 		log.Fatalln(err)
