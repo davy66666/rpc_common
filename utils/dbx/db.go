@@ -6,7 +6,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"net/url"
+	"reflect"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/davy66666/rpc_common/utils/loggerx"
@@ -232,4 +234,27 @@ func maskURI(uri string) string {
 		u.User = url.UserPassword(u.User.Username(), "******")
 	}
 	return u.String()
+}
+
+// 自动提取结构体字段名（优先使用 db 标签）
+func GetSelectFieldList(obj interface{}) []interface{} {
+	t := reflect.TypeOf(obj)
+	if t.Kind() == reflect.Ptr {
+		t = t.Elem()
+	}
+
+	var fields []interface{}
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		if field.PkgPath != "" {
+			continue
+		}
+		dbTag := field.Tag.Get("db")
+		if dbTag != "" {
+			fields = append(fields, dbTag)
+		} else {
+			fields = append(fields, strings.ToLower(field.Name))
+		}
+	}
+	return fields
 }
